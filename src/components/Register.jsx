@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Button } from "react-bootstrap";
+import { Button, ToastContainer, Toast } from "react-bootstrap";
 import axios from "axios";
+import "./register.css";
 const Register = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [resdata, setdata] = useState("");
+  const [show, setShow] = useState(false);
+  const [err, seterr] = useState("");
   const [iswhatsapp, setWhatsApp] = useState(false);
   const [isgurupetam, setGurupetam] = useState(false);
   const [islocation, setLocation] = useState(false);
+  const navigate = useNavigate();
   const onSubmit = (data) => {
     data = {
       firstname: data.firstname,
@@ -26,14 +32,18 @@ const Register = () => {
       .post(`http://localhost:4000/addperson`, data)
       .then((res) => {
         console.log(res);
+        setdata(res.data);
+        setShow(true);
       })
       .catch((err) => {
         console.log(err.response);
+        seterr(err?.response?.data);
       });
   };
   return (
-    <div>
-      Register Here
+    <div className="container">
+      <h2>Register Here</h2>
+      <h6>Your data was not found in Database, kindly register here.</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           type="text"
@@ -247,6 +257,31 @@ const Register = () => {
         <br />
         <Button type="submit">Submit</Button>
       </form>
+      <ToastContainer position="top-center">
+        <Toast
+          show={show}
+          onClose={() => {
+            setShow(false);
+          }}
+          className="py-12 col-sm-12 mx-auto bg-success"
+          style={{
+            marginTop: "20px",
+            textAlign: "center",
+            color: "white",
+            width: "400px",
+          }}>
+          <Toast.Header className="justify-content-between">
+            <strong>success</strong>
+            <Button
+              onClick={() => {
+                navigate("/");
+              }}>
+              back to login
+            </Button>
+          </Toast.Header>
+          <Toast.Body>{resdata}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </div>
   );
 };
