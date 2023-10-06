@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300&display=swap");
+
 .container {
   text-align: center;
   margin: auto;
@@ -6,6 +8,9 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  background-color: rgb(165, 223, 223);
+  font-family: "Open Sans", sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 form {
@@ -30,3 +35,4 @@ button {
 button:hover {
   background-color: #0056b3;
 }
+

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 // Import your CSS file
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Table, Toast, ToastContainer } from "react-bootstrap";
+import { Table, Toast, ToastContainer, Modal, Button } from "react-bootstrap";
 
 const PhoneLogin = () => {
   const navigate = useNavigate();
@@ -10,6 +10,13 @@ const PhoneLogin = () => {
   const [resdata, setdata] = useState([]);
   const [err, seterr] = useState("");
   const [show, setShow] = useState(false);
+  const [showModal, setModal] = useState(false);
+  const handleShow = () => {
+    setModal(true);
+  };
+  const handleClose = () => {
+    setModal(false);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = { phoneNumber: phoneNumber };
@@ -17,6 +24,7 @@ const PhoneLogin = () => {
       .post("http://localhost:4000/getbynum", data)
       .then((res) => {
         setdata(res.data);
+        setModal(true);
       })
       .catch((err) => {
         console.log(err.response);
@@ -49,6 +57,7 @@ const PhoneLogin = () => {
         <input
           type="text"
           placeholder="Enter Phone Number"
+          className="form-control"
           onChange={(event) => {
             setPhoneNumber(event.target.value);
           }}
@@ -58,7 +67,7 @@ const PhoneLogin = () => {
       <br />
 
       <br />
-      <Table striped bordered hover>
+      {/* <Table striped bordered hover>
         {resdata.length !== 0 ? (
           <thead>
             <tr>
@@ -89,7 +98,19 @@ const PhoneLogin = () => {
             </tr>
           ))}
         </tbody>
-      </Table>
+      </Table> */}
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Your data is already there in our Database, We will contact you
+          shortly by Phone or G-mail
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleClose}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

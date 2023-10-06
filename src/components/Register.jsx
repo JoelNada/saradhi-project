@@ -42,6 +42,13 @@ const Register = () => {
   };
   return (
     <div className="container">
+      <Button
+        style={{ float: "right" }}
+        onClick={() => {
+          navigate("/");
+        }}>
+        Back to login
+      </Button>
       <h2>Register Here</h2>
       <h6>Your data was not found in Database, kindly register here.</h6>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -80,7 +87,10 @@ const Register = () => {
           placeholder="Enter Your Gmail"
           className="form-control"
           {...register("gmail", {
-            required: "**Please Enter your Gmail",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+              message: "Invalid email address",
+            },
           })}
         />
         {errors ? (
@@ -96,6 +106,10 @@ const Register = () => {
           className="form-control"
           {...register("phonenumber", {
             required: "**Please Enter your PhoneNumber",
+            pattern: {
+              value: /^\d{10}$/,
+              message: "Please enter a 10-digit phone number.",
+            },
           })}
         />
         {errors ? (
@@ -145,6 +159,10 @@ const Register = () => {
               className="form-control mb-4"
               {...register("whatsappnumber", {
                 required: "**Please Enter your WhatsAppNumber",
+                pattern: {
+                  value: /^\d{10}$/,
+                  message: "Please enter a 10-digit phone number.",
+                },
               })}
             />
             {errors ? (
@@ -164,7 +182,7 @@ const Register = () => {
           className="d-flex flex-column align-items-start"
           style={{ width: "100%" }}>
           <p>Please Select any of your Location from below.</p>
-          <div>
+          <div className="mb-2">
             <label className="form-check-label">
               Select GuruPetam{" "}
               <input
@@ -206,6 +224,7 @@ const Register = () => {
                 <option value="Hyderabad">Two</option>
                 <option value="Chennai">Three</option>
               </select>
+
               {errors ? (
                 <p
                   style={{
@@ -224,19 +243,14 @@ const Register = () => {
           )}
           {islocation ? (
             <>
-              <select
-                className="form-select form-select-lg mb-3 mt-3"
-                aria-label=".form-select-lg example"
+              <input
+                type="number"
+                className="form-control mb-3 mt-3 w-25"
+                placeholder="Enter Your Area PinCode"
                 {...register("home", {
                   required: "**Please Enter your Home",
-                })}>
-                <option selected disabled>
-                  Select Home
-                </option>
-                <option value="Vijayawada">One</option>
-                <option value="Hyderabad">Two</option>
-                <option value="Chennai">Three</option>
-              </select>
+                })}
+              />
               {errors ? (
                 <p
                   style={{
@@ -254,8 +268,8 @@ const Register = () => {
             ""
           )}
         </div>
-        <br />
-        <Button type="submit">Submit</Button>
+
+        <Button type="submit">Register</Button>
       </form>
       <ToastContainer position="top-center">
         <Toast
