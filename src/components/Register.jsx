@@ -245,7 +245,7 @@ const Register = () => {
             <>
               <input
                 type="number"
-                className="form-control mb-3 mt-3 w-25"
+                className="form-control mb-3 mt-3 w-100"
                 placeholder="Enter Your Area PinCode"
                 {...register("home", {
                   required: "**Please Enter your Home",

@@ -70,7 +70,9 @@ const PhoneLogin = () => {
       {/* <Table striped bordered hover>
         {resdata.length !== 0 ? (
           <thead>
-            <tr>
+            <tr> onChange={(event) => {
+            setPhoneNumber(event.target.value);
+          }}
               <th>SNO</th>
               <th>Firstname</th>
               <th>Lastname</th>
